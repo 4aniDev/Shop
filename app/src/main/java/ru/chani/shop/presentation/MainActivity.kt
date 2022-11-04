@@ -1,7 +1,8 @@
-package ru.chani.shop
+package ru.chani.shop.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.chani.shop.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
