@@ -1,4 +1,4 @@
-package ru.chani.shop.domain.entity
+package ru.chani.shop.data.network.models
 
 data class BestSeller(
     val discount_price: Int,

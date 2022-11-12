@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nav_item_padding">20dp</dimen>
+
+    <dimen name="category_round">68dp</dimen>
+<!--  "category_corner_radius" - is half of category round  -->
+    <dimen name="category_corner_radius">34dp</dimen>
+    <dimen name="category_elevation">15dp</dimen>
+
+    <dimen name="favorite_round">30dp</dimen>
+    <dimen name="favorite_corner_radius">15dp</dimen>
+    <dimen name="favorite_elevation">15dp</dimen>
+</resources>

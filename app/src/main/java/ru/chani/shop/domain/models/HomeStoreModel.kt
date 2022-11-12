@@ -1,6 +1,6 @@
-package ru.chani.shop.domain.entity
+package ru.chani.shop.domain.models
 
-data class HomeStore(
+data class HomeStoreModel(
     val id: Int,
     val is_buy: Boolean,
     val is_new: Boolean,

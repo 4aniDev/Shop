@@ -10,4 +10,6 @@
 
     <color name="base_orange">#FF6E4E</color>
     <color name="base_purple">#010035</color>
+    <color name="category_inactive">#B3B3C3</color>
+
 </resources>
