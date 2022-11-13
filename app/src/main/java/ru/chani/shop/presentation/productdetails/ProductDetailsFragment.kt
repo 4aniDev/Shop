@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.chani.shop.databinding.FragmentProductDetailsBinding
+import ru.chani.shop.presentation.navigator
 
 
 class ProductDetailsFragment : Fragment() {
@@ -45,12 +46,17 @@ class ProductDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setListeners()
     }
 
     private fun setObservers() {
         viewModel.product.observe(viewLifecycleOwner) {
-            binding.tv.text = it.toString()
+
         }
+    }
+
+    private fun setListeners() {
+        binding.btBack.setOnClickListener { navigator().goBack() }
     }
 
     companion object {
