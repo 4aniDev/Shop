@@ -6,6 +6,7 @@ import android.view.View
 import ru.chani.shop.R
 import ru.chani.shop.databinding.ActivityMainBinding
 import ru.chani.shop.presentation.mainscreen.MainScreenFragment
+import ru.chani.shop.presentation.productdetails.ProductDetailsFragment
 
 class MainActivity : AppCompatActivity(), Navigator {
 
@@ -53,6 +54,13 @@ class MainActivity : AppCompatActivity(), Navigator {
             }
         }
 
+    }
+
+    override fun goToProductDetails(id: Int) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, ProductDetailsFragment.newInstance(productId = id))
+            .addToBackStack(ProductDetailsFragment.FRAGMENT_NAME)
+            .commit()
     }
 
     override fun goBack() {

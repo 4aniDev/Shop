@@ -18,6 +18,7 @@ import ru.chani.shop.presentation.mainscreen.category.CategoryAdapter
 import ru.chani.shop.presentation.mainscreen.filters.Filters
 import ru.chani.shop.presentation.mainscreen.util.ActionOnRightSwipe
 import ru.chani.shop.presentation.mainscreen.util.OnSwipeTouchListener
+import ru.chani.shop.presentation.navigator
 
 
 class MainScreenFragment : Fragment(), ActionOnRightSwipe {
@@ -98,7 +99,8 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     }
 
     private fun setUpLocations(locations: LocationsModel) {
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, locations.places)
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, locations.places)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         binding.spinner.adapter = adapter
     }
@@ -115,7 +117,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         with(binding.rvBestSeller) {
             bestSellerRvAdapter = BestSellerAdapter()
             adapter = bestSellerRvAdapter
-            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = GridLayoutManager(requireContext(), 2)
             itemAnimator = null
         }
     }
@@ -130,13 +132,25 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
             viewModel.changeBestSellerItemFavoriteState(bestSellerModel = sellerModel)
         }
 
+        bestSellerRvAdapter.onBestSellerItemClickListener = {
+            navigator().goToProductDetails(it.id)
+        }
+
         binding.btFilter.setOnClickListener {
             filters.showPopupWindow()
         }
+
+
+        binding.ivHsBg.setOnClickListener {
+            viewModel.currentHomeStore.value?.let {
+                navigator().goToProductDetails(it.id)
+            }
+        }
+
     }
 
     private fun setOnSwipeListeners() {
-        binding.cvHotSales.setOnTouchListener(OnSwipeTouchListener(requireContext(),this ))
+        binding.cvHotSales.setOnTouchListener(OnSwipeTouchListener(requireContext(), this))
     }
 
     override fun rightSwipe() {

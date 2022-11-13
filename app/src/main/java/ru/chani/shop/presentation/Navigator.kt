@@ -10,4 +10,6 @@ interface Navigator {
 
     fun goBack()
 
+    fun goToProductDetails(id: Int)
+
 }
