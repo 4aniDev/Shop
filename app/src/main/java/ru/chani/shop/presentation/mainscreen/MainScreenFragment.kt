@@ -15,6 +15,7 @@ import ru.chani.shop.domain.models.HomeStoreModel
 import ru.chani.shop.domain.models.LocationsModel
 import ru.chani.shop.presentation.mainscreen.bestseller.BestSellerAdapter
 import ru.chani.shop.presentation.mainscreen.category.CategoryAdapter
+import ru.chani.shop.presentation.mainscreen.filters.Filters
 import ru.chani.shop.presentation.mainscreen.util.ActionOnRightSwipe
 import ru.chani.shop.presentation.mainscreen.util.OnSwipeTouchListener
 
@@ -24,6 +25,8 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding: FragmentMainScreenBinding
         get() = _binding ?: throw RuntimeException("FragmentMainScreenBinding == null")
+
+    private lateinit var filters: Filters
 
     private lateinit var viewModel: MainViewModel
 
@@ -45,6 +48,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainScreenBinding.inflate(layoutInflater)
+        filters = Filters(binding.root, layoutInflater, requireContext())
         return binding.root
     }
 
@@ -54,7 +58,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         setupBestSellerRecyclerView()
         setObservers()
         setOnSwipeListeners()
-        setupClickListeners()
+        setOnClickListeners()
     }
 
     private fun setObservers() {
@@ -116,7 +120,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         }
     }
 
-    private fun setupClickListeners() {
+    private fun setOnClickListeners() {
         categoryRvAdapter.onCategoryItemClickListener = { category ->
             viewModel.changeActiveCategory(category = category)
         }
@@ -124,6 +128,10 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
 
         bestSellerRvAdapter.onBestSellerItemFavoriteClickListener = { sellerModel ->
             viewModel.changeBestSellerItemFavoriteState(bestSellerModel = sellerModel)
+        }
+
+        binding.btFilter.setOnClickListener {
+            filters.showPopupWindow()
         }
     }
 

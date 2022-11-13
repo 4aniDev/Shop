@@ -7,7 +7,7 @@ import ru.chani.shop.R
 import ru.chani.shop.databinding.ActivityMainBinding
 import ru.chani.shop.presentation.mainscreen.MainScreenFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun goBack() {
+        onBackPressed()
+    }
 
 
     companion object {
@@ -63,4 +66,6 @@ class MainActivity : AppCompatActivity() {
         private const val TAB_3 = 3
         private const val TAB_4 = 4
     }
+
+
 }
