@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bekawestberg.loopinglayout.library.LoopingLayoutManager
 import ru.chani.shop.databinding.FragmentProductDetailsBinding
 import ru.chani.shop.presentation.navigator
+import ru.chani.shop.presentation.productdetails.images.CarouselLayoutManager
+import ru.chani.shop.presentation.productdetails.images.ImagesAdapter
+import ru.chani.shop.presentation.productdetails.util.StarManager
+import ru.chani.shop.presentation.productdetails.util.ViewHasStar
 
 
-class ProductDetailsFragment : Fragment() {
+class ProductDetailsFragment : Fragment(), ViewHasStar {
 
     private var productId: Int = DEFAULT_ID
 
@@ -19,8 +25,19 @@ class ProductDetailsFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentProductDetailsBinding == null")
 
     private lateinit var viewModel: ProductDetailsViewModel
+    private lateinit var imagesRvAdapter: ImagesAdapter
+    private lateinit var starManager: StarManager
 
-
+    override val ivStar1: ImageView
+        get() = binding.ivStar1
+    override val ivStar2: ImageView
+        get() = binding.ivStar2
+    override val ivStar3: ImageView
+        get() = binding.ivStar3
+    override val ivStar4: ImageView
+        get() = binding.ivStar4
+    override val ivStar5: ImageView
+        get() = binding.ivStar5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +63,39 @@ class ProductDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         setListeners()
+        starManager = StarManager(this)
     }
 
     private fun setObservers() {
         viewModel.product.observe(viewLifecycleOwner) {
-
+            setupImageRv(it.images)
+            binding.tvTitle.text = it.title
+            starManager.setStarsByRating(it.rating)
         }
     }
 
     private fun setListeners() {
         binding.btBack.setOnClickListener { navigator().goBack() }
     }
+
+    private fun setupImageRv(productPicture: List<String>) {
+        val carouselLayoutManager = CarouselLayoutManager(
+            requireContext(),
+            LoopingLayoutManager.HORIZONTAL,
+            false
+        )
+        with(binding.rvImages) {
+            imagesRvAdapter = ImagesAdapter()
+            adapter = imagesRvAdapter
+            imagesRvAdapter.setListOfImages(productPicture)
+            layoutManager = carouselLayoutManager
+            carouselLayoutManager.scrollToPosition(ImagesAdapter.MIDDLE_OF_LIST)
+
+        }
+    }
+
 
     companion object {
         const val FRAGMENT_NAME = "PRODUCT DETAILS"
@@ -73,4 +111,6 @@ class ProductDetailsFragment : Fragment() {
                 }
             }
     }
+
+
 }

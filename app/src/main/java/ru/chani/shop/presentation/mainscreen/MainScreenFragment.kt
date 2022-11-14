@@ -141,7 +141,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         }
 
 
-        binding.ivHsBg.setOnClickListener {
+        binding.btBuy.setOnClickListener {
             viewModel.currentHomeStore.value?.let {
                 navigator().goToProductDetails(it.id)
             }
