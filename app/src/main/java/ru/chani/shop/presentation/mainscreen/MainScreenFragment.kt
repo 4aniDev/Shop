@@ -158,6 +158,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     }
 
     companion object {
+        const val FRAGMENT_NAME = "MAIN SCREEN FRAGMENT"
 
         @JvmStatic
         fun newInstance() =
