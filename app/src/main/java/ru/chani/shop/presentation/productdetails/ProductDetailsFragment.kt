@@ -8,15 +8,20 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bekawestberg.loopinglayout.library.LoopingLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import ru.chani.shop.databinding.FragmentProductDetailsBinding
+import ru.chani.shop.domain.models.ProductModel
 import ru.chani.shop.presentation.navigator
 import ru.chani.shop.presentation.productdetails.images.CarouselLayoutManager
 import ru.chani.shop.presentation.productdetails.images.ImagesAdapter
+import ru.chani.shop.presentation.productdetails.info.ProductInfoAdapter
 import ru.chani.shop.presentation.productdetails.util.StarManager
 import ru.chani.shop.presentation.productdetails.util.ViewHasStar
 
 
 class ProductDetailsFragment : Fragment(), ViewHasStar {
+
+    private lateinit var demoCollectionAdapter: ProductInfoAdapter
 
     private var productId: Int = DEFAULT_ID
 
@@ -66,6 +71,8 @@ class ProductDetailsFragment : Fragment(), ViewHasStar {
 
         setListeners()
         starManager = StarManager(this)
+
+
     }
 
     private fun setObservers() {
@@ -73,6 +80,9 @@ class ProductDetailsFragment : Fragment(), ViewHasStar {
             setupImageRv(it.images)
             binding.tvTitle.text = it.title
             starManager.setStarsByRating(it.rating)
+
+            setTabLayout(product = it)
+
         }
     }
 
@@ -93,6 +103,18 @@ class ProductDetailsFragment : Fragment(), ViewHasStar {
             layoutManager = carouselLayoutManager
             carouselLayoutManager.scrollToPosition(ImagesAdapter.MIDDLE_OF_LIST)
 
+        }
+    }
+
+    private fun setTabLayout(product: ProductModel) {
+        viewModel.categoryTitles.observe(viewLifecycleOwner) { listOfTitles ->
+            demoCollectionAdapter = ProductInfoAdapter(
+                product = product, productDetailsViewModel = viewModel, fragment = this
+            )
+            binding.viewPager.adapter = demoCollectionAdapter
+            TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                tab.text = listOfTitles[position]
+            }.attach()
         }
     }
 

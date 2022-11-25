@@ -10,4 +10,7 @@
     <dimen name="favorite_round">30dp</dimen>
     <dimen name="favorite_corner_radius">15dp</dimen>
     <dimen name="favorite_elevation">15dp</dimen>
+
+    <dimen name="info_shop_icon">27dp</dimen>
+    <dimen name="info_shop_icon_bottom_margin">5dp</dimen>
 </resources>
