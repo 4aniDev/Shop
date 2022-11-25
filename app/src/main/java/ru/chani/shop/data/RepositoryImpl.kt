@@ -12,6 +12,7 @@ import ru.chani.shop.domain.models.ProductModel
 class RepositoryImpl(context: Context) : Repository {
 
     private val categoriesSource = CategoriesSource(context)
+    private val infoCategoryTitlesSource = InfoCategoryTitlesSource(context = context)
 
     private val mapper = NetworkMapper()
 
@@ -31,5 +32,9 @@ class RepositoryImpl(context: Context) : Repository {
 
     override suspend fun getProductById(id: Int): ProductModel {
         return mapper.productToProductModel(RetrofitInstance.api.getProduct())
+    }
+
+    override fun getListOfInfoCategoryTitles(): List<String> {
+        return infoCategoryTitlesSource.getList()
     }
 }

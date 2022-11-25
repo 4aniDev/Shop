@@ -141,7 +141,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         }
 
 
-        binding.ivHsBg.setOnClickListener {
+        binding.btBuy.setOnClickListener {
             viewModel.currentHomeStore.value?.let {
                 navigator().goToProductDetails(it.id)
             }
@@ -158,6 +158,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     }
 
     companion object {
+        const val FRAGMENT_NAME = "MAIN SCREEN FRAGMENT"
 
         @JvmStatic
         fun newInstance() =

@@ -16,4 +16,6 @@ interface Repository {
 
     suspend fun getProductById(id: Int): ProductModel
 
+    fun getListOfInfoCategoryTitles(): List<String>
+
 }

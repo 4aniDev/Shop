@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp"
+    tools:context=".presentation.productdetails.info.InfoShopFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_cpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/ll_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/info_shop_icon"
+            android:layout_height="@dimen/info_shop_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/info_shop_icon_bottom_margin"
+            android:src="@drawable/cpu" />
+
+        <TextView
+            android:id="@+id/tv_cpu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            tools:text="Exynozzzz" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/ll_ram"
+        app:layout_constraintStart_toEndOf="@id/ll_cpu"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/info_shop_icon"
+            android:layout_height="@dimen/info_shop_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/info_shop_icon_bottom_margin"
+            android:src="@drawable/camera" />
+
+        <TextView
+            android:id="@+id/tv_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            tools:text="1040 + 500 mp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_ram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/ll_sd"
+        app:layout_constraintStart_toEndOf="@id/ll_camera"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/info_shop_icon"
+            android:layout_height="@dimen/info_shop_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/info_shop_icon_bottom_margin"
+            android:src="@drawable/ram" />
+
+        <TextView
+            android:id="@+id/tv_ram"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            tools:text="1040 + 500 mp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ll_ram"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/info_shop_icon"
+            android:layout_height="@dimen/info_shop_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/info_shop_icon_bottom_margin"
+            android:src="@drawable/sd" />
+
+        <TextView
+            android:id="@+id/tv_sd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            tools:text="1040 + 500 mp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_color_n_capacity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/select_color_and_capacity"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_cpu" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_colors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="30dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rv_capacity"
+        app:layout_constraintTop_toBottomOf="@id/tv_color_n_capacity_title"
+        tools:listitem="@layout/bt_color_active" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_capacity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/rv_colors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rv_colors"
+        app:layout_constraintTop_toBottomOf="@id/tv_color_n_capacity_title"
+        tools:listitem="@layout/bt_capacity_active" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardBackgroundColor="@color/base_orange"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_capacity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="end"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="1000$" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
