@@ -3,9 +3,11 @@ package ru.chani.shop.data.network
 import ru.chani.shop.data.network.models.BestSeller
 import ru.chani.shop.data.network.models.BestSellerAndHomeStore
 import ru.chani.shop.data.network.models.HomeStore
+import ru.chani.shop.data.network.models.Product
 import ru.chani.shop.domain.models.BestSellerModel
 import ru.chani.shop.domain.models.HomeStoreModel
 import ru.chani.shop.domain.models.MainScreenModel
+import ru.chani.shop.domain.models.ProductModel
 
 class NetworkMapper {
 
@@ -38,8 +40,23 @@ class NetworkMapper {
                 home_store.map { homeStoreToHomeStoreModel(it) }
             )
         }
-
-
-
     }
+
+    fun productToProductModel(product: Product): ProductModel {
+        return ProductModel(
+            CPU = product.CPU,
+            camera = product.camera,
+            capacity = product.capacity,
+            color = product.color,
+            id = product.id,
+            images = product.images,
+            isFavorites = product.isFavorites,
+            price = product.price,
+            rating = product.rating,
+            sd = product.sd,
+            ssd = product.ssd,
+            title = product.title
+        )
+    }
+
 }

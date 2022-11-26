@@ -15,8 +15,10 @@ import ru.chani.shop.domain.models.HomeStoreModel
 import ru.chani.shop.domain.models.LocationsModel
 import ru.chani.shop.presentation.mainscreen.bestseller.BestSellerAdapter
 import ru.chani.shop.presentation.mainscreen.category.CategoryAdapter
+import ru.chani.shop.presentation.mainscreen.filters.Filters
 import ru.chani.shop.presentation.mainscreen.util.ActionOnRightSwipe
 import ru.chani.shop.presentation.mainscreen.util.OnSwipeTouchListener
+import ru.chani.shop.presentation.navigator
 
 
 class MainScreenFragment : Fragment(), ActionOnRightSwipe {
@@ -24,6 +26,8 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding: FragmentMainScreenBinding
         get() = _binding ?: throw RuntimeException("FragmentMainScreenBinding == null")
+
+    private lateinit var filters: Filters
 
     private lateinit var viewModel: MainViewModel
 
@@ -45,6 +49,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainScreenBinding.inflate(layoutInflater)
+        filters = Filters(binding.root, layoutInflater, requireContext())
         return binding.root
     }
 
@@ -54,7 +59,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         setupBestSellerRecyclerView()
         setObservers()
         setOnSwipeListeners()
-        setupClickListeners()
+        setOnClickListeners()
     }
 
     private fun setObservers() {
@@ -94,7 +99,8 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     }
 
     private fun setUpLocations(locations: LocationsModel) {
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, locations.places)
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, locations.places)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         binding.spinner.adapter = adapter
     }
@@ -111,12 +117,12 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         with(binding.rvBestSeller) {
             bestSellerRvAdapter = BestSellerAdapter()
             adapter = bestSellerRvAdapter
-            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = GridLayoutManager(requireContext(), 2)
             itemAnimator = null
         }
     }
 
-    private fun setupClickListeners() {
+    private fun setOnClickListeners() {
         categoryRvAdapter.onCategoryItemClickListener = { category ->
             viewModel.changeActiveCategory(category = category)
         }
@@ -125,10 +131,26 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
         bestSellerRvAdapter.onBestSellerItemFavoriteClickListener = { sellerModel ->
             viewModel.changeBestSellerItemFavoriteState(bestSellerModel = sellerModel)
         }
+
+        bestSellerRvAdapter.onBestSellerItemClickListener = {
+            navigator().goToProductDetails(it.id)
+        }
+
+        binding.btFilter.setOnClickListener {
+            filters.showPopupWindow()
+        }
+
+
+        binding.btBuy.setOnClickListener {
+            viewModel.currentHomeStore.value?.let {
+                navigator().goToProductDetails(it.id)
+            }
+        }
+
     }
 
     private fun setOnSwipeListeners() {
-        binding.cvHotSales.setOnTouchListener(OnSwipeTouchListener(requireContext(),this ))
+        binding.cvHotSales.setOnTouchListener(OnSwipeTouchListener(requireContext(), this))
     }
 
     override fun rightSwipe() {
@@ -136,6 +158,7 @@ class MainScreenFragment : Fragment(), ActionOnRightSwipe {
     }
 
     companion object {
+        const val FRAGMENT_NAME = "MAIN SCREEN FRAGMENT"
 
         @JvmStatic
         fun newInstance() =
