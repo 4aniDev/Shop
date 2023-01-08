@@ -33,7 +33,7 @@ class MainViewModel(context: Context) : ViewModel() {
     }
 
     fun getMainScreen() {
-        viewModelScope.launch {
+        val a = viewModelScope.launch {
             val response = getMainScreenFields()
             mainScreen.value = response
 
